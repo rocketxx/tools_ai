@@ -19,7 +19,7 @@ Una volta creato l'ambiente virtuale, attivalo con il comando appropriato per il
 #### Su Windows:
 
 ```bash
-.env\Scriptsctivate
+.\env\Scripts\ctivate
 ```
 
 #### Su macOS/Linux:
