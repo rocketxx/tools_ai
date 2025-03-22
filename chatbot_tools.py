@@ -1,7 +1,8 @@
 import wikipedia
 from duckduckgo_search import DDGS
 from datetime import datetime
-
+import webbrowser
+import re
 def search_wikipedia(query):
     """Cerca un argomento su Wikipedia."""
     try:
@@ -13,10 +14,17 @@ def search_wikipedia(query):
         return f"Wikipedia: Ambiguità, prova con: {', '.join(e.options[:5])}"
 
 def search_duckduckgo(query):
-    """Cerca sul web usando DuckDuckGo."""
+    """Cerca sul web usando DuckDuckGo e apre il primo link."""
     with DDGS() as ddgs:
         results = ddgs.text(query, max_results=3)
-        return "\n".join([f"{r['title']}: {r['href']}" for r in results])
+        
+        # Prepara la risposta da restituire
+        result_str = "\n".join([f"{r['title']}: {r['href']}" for r in results])
+        
+        # Chiama la funzione per aprire il primo link
+        open_first_link(result_str)
+        
+        return result_str
 
 def save_to_txt(data, filename="research_output.txt"):
     """Salva i dati in un file di testo."""
@@ -27,6 +35,18 @@ def save_to_txt(data, filename="research_output.txt"):
         f.write(formatted_text)
 
     return f"Dati salvati in {filename}"
+
+def open_first_link(risposta):
+    # Utilizzare una espressione regolare per estrarre tutti i link
+    links = re.findall(r'https?://\S+', risposta)
+    
+    if links:
+        # Prendi il primo link
+        primo_link = links[0]
+        # Apri il primo link nel browser
+        webbrowser.open(primo_link)
+    else:
+        print("Nessun link trovato.")
 
 TOOLS = {
     "wikipedia": search_wikipedia,
