@@ -3,6 +3,7 @@ from duckduckgo_search import DDGS
 from datetime import datetime
 import webbrowser
 import re
+import requests
 def search_wikipedia(query):
     """Cerca un argomento su Wikipedia."""
     try:
@@ -48,8 +49,24 @@ def open_first_link(risposta):
     else:
         print("Nessun link trovato.")
 
+
+
+def calcola_distanza(query):
+    """Richiama una API di test"""   
+    url = "http://127.0.0.1:5000/api/data" #server flask di test
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Genera un'eccezione se il codice di stato è diverso da 200
+        data = response.json()
+        return data  # Restituisci il dizionario invece di stamparlo
+    except requests.exceptions.RequestException as e:
+        return {"error": str(e)}
+
+
+
 TOOLS = {
     "wikipedia": search_wikipedia,
     "web": search_duckduckgo,
     "save": save_to_txt,
+    "distanza": calcola_distanza
 }

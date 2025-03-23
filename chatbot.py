@@ -16,6 +16,7 @@ Gli strumenti disponibili sono:
 - "wikipedia" per cercare su Wikipedia
 - "web" per cercare su DuckDuckGo
 - "save" per salvare un testo
+- "distanza" per calcolare la distanza tra due mete
 
 Se la richiesta non richiede un tool, rispondi direttamente.
 """
